@@ -22,7 +22,11 @@ export default function Home() {
       createData(3, '歯をみがく', '2020-12-28', '2020-12-16', '2020-12-21', 'んんんんんんんんんんんんんんんんんんん', '未着手'),
       createData(2, 'ご飯を作る', '2020-12-28', '2020-12-12', '2020-12-20', 'ぱぱぱぱぱささささささささいいいいいえええええ', '未着手'),
       createData(1, '洗濯する', '2020-12-28', '2020-12-10', '2020-12-19', 'あおあおあおあおあおおあおあおあおあおあおあおあ', '未着手'),
-    ],
+    ].sort((a,b) => {
+      if(a.id > b.id) return 1;
+      if(a.id < b.id) return -1;
+      return 0;
+    }),
     selectedTodo: {
       title: '',
       limit: '',
@@ -39,7 +43,11 @@ export default function Home() {
       case 'create_row':
         return {
           ...state,
-          rows: [ ...state.rows, action.payload]
+          rows: [ ...state.rows, action.payload].sort((a,b) => {
+            if(a.id > b.id) return 1;
+            if(a.id < b.id) return -1;
+            return 0;
+          })
         }
       case 'update_row':
         return {

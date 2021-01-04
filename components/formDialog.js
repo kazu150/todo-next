@@ -58,8 +58,8 @@ export default function FormDialog() {
             dispatch({
                 type: 'update_row',
                 payload: [ ...newRows, newSelectedTodo ].sort((a,b) => {
-                    if(a.id > b.id) return -1;
-                    if(a.id < b.id) return 1;
+                    if(a.id > b.id) return 1;
+                    if(a.id < b.id) return -1;
                     return 0;
                 })
             })
@@ -114,7 +114,6 @@ export default function FormDialog() {
     }));
 
     const classes = useStyles();
-
 
     return (
         <div>
