@@ -29,10 +29,9 @@ export default function Home() {
       createdAt: '',
       updatedAt: '',
       status: '',
-      discription: '',
+      description: '',
       id: ''
     }
-
   }
 
   const reducer = (state, action) => {

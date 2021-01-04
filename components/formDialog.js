@@ -72,7 +72,7 @@ export default function FormDialog() {
                     createdAt: getDate(),
                     updatedAt: getDate(),
                     status: status,
-                    discription: state.selectedTodo.discription,
+                    description: state.selectedTodo.description,
                     id: state.rows.reduce((a,b) => a.id>b.id ? a : b).id + 1
                 }
             })
@@ -177,7 +177,7 @@ export default function FormDialog() {
                         value={state.selectedTodo.description}
                         onChange={e => dispatch({
                             type: 'update_selectedTodo',
-                            payload: { discription: e.target.value }
+                            payload: { description: e.target.value }
                         })}
                         fullWidth
                     />
