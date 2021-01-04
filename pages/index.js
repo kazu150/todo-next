@@ -1,65 +1,93 @@
-import Head from 'next/head'
-import styles from '../styles/Home.module.css'
+import React, { useState, useReducer } from 'react'
+import TodoList from '../components/todoList'
+import FormDialog from '../components/formDialog'
 
-export default function Home() {
+export const TodoContext = React.createContext()
+
+export default function Home() {  
+  const [status, setStatus] = useState('未着手');
+  const [open, setOpen] = useState(false);
+
+  const createData = (id, title, limit, createdAt, updatedAt, description, status) => {  
+    return { id, title, limit, createdAt, updatedAt, description, status };
+  }
+
+
+  const initialState = {
+    rows: [
+      createData(5, '起きる', '2020-12-28', '2020-12-20', '2020-12-28', 'うううううううううううううううううううう', '未着手'),
+      createData(4, '宿題をやる', '2020-12-28', '2020-12-18', '2020-12-22', 'えええええええええええええええええ', '未着手'),
+      createData(3, '歯をみがく', '2020-12-28', '2020-12-16', '2020-12-21', 'んんんんんんんんんんんんんんんんんんん', '未着手'),
+      createData(2, 'ご飯を作る', '2020-12-28', '2020-12-12', '2020-12-20', 'ぱぱぱぱぱささささささささいいいいいえええええ', '未着手'),
+      createData(1, '洗濯する', '2020-12-28', '2020-12-10', '2020-12-19', 'あおあおあおあおあおおあおあおあおあおあおあおあ', '未着手'),
+    ],
+    selectedTodo: {
+      title: '',
+      limit: '',
+      createdAt: '',
+      updatedAt: '',
+      status: '',
+      discription: '',
+      id: ''
+    }
+
+  }
+
+  const reducer = (state, action) => {
+    switch(action.type) { 
+      case 'create_row':
+        return {
+          ...state,
+          rows: [ ...state.rows, action.payload]
+        }
+      case 'update_row':
+        return {
+          ...state,
+          rows: action.payload
+        }
+      case 'delete_row':
+        return {
+          ...state,
+          rows: action.payload
+        }
+      case 'set_selectedTodo':
+        return {
+          ...state,
+          selectedTodo: action.payload
+        }
+      case 'update_selectedTodo':
+        return {
+          ...state,
+          selectedTodo: { ...state.selectedTodo, ...action.payload }
+        }
+      case 'clear_selectedTodo':
+        return {
+          ...state,
+          selectedTodo: initialState.selectedTodo
+        }
+      default: 
+        return;
+    }
+  }
+
+  const [ state, dispatch ] = useReducer(reducer, initialState)
+
+    
   return (
-    <div className={styles.container}>
-      <Head>
-        <title>Create Next App</title>
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
-
-      <main className={styles.main}>
-        <h1 className={styles.title}>
-          Welcome to <a href="https://nextjs.org">Next.js!</a>
-        </h1>
-
-        <p className={styles.description}>
-          Get started by editing{' '}
-          <code className={styles.code}>pages/index.js</code>
-        </p>
-
-        <div className={styles.grid}>
-          <a href="https://nextjs.org/docs" className={styles.card}>
-            <h3>Documentation &rarr;</h3>
-            <p>Find in-depth information about Next.js features and API.</p>
-          </a>
-
-          <a href="https://nextjs.org/learn" className={styles.card}>
-            <h3>Learn &rarr;</h3>
-            <p>Learn about Next.js in an interactive course with quizzes!</p>
-          </a>
-
-          <a
-            href="https://github.com/vercel/next.js/tree/master/examples"
-            className={styles.card}
-          >
-            <h3>Examples &rarr;</h3>
-            <p>Discover and deploy boilerplate example Next.js projects.</p>
-          </a>
-
-          <a
-            href="https://vercel.com/import?filter=next.js&utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className={styles.card}
-          >
-            <h3>Deploy &rarr;</h3>
-            <p>
-              Instantly deploy your Next.js site to a public URL with Vercel.
-            </p>
-          </a>
-        </div>
-      </main>
-
-      <footer className={styles.footer}>
-        <a
-          href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Powered by{' '}
-          <img src="/vercel.svg" alt="Vercel Logo" className={styles.logo} />
-        </a>
-      </footer>
-    </div>
-  )
+    <TodoContext.Provider 
+      value={{
+        open, 
+        setOpen, 
+        status, 
+        setStatus,
+        state,
+        dispatch
+      }} 
+    >
+      <div className="App">
+        <TodoList />
+        <FormDialog />
+      </div>
+    </TodoContext.Provider>
+  );
 }
