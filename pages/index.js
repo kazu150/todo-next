@@ -1,6 +1,8 @@
 import React, { useState, useReducer } from 'react'
 import TodoList from '../components/todoList'
 import FormDialog from '../components/formDialog'
+import Button from '@material-ui/core/Button';
+import { makeStyles } from '@material-ui/core/styles';
 
 export const TodoContext = React.createContext()
 
@@ -72,7 +74,14 @@ export default function Home() {
 
   const [ state, dispatch ] = useReducer(reducer, initialState)
 
-    
+  const useStyles = makeStyles((theme) => ({
+    button: {
+        marginTop: '20px',
+        marginLeft: '20px'
+    }
+  }));  
+  const classes = useStyles();
+
   return (
     <TodoContext.Provider 
       value={{
@@ -87,6 +96,14 @@ export default function Home() {
       <div className="App">
         <TodoList />
         <FormDialog />
+        <Button 
+          className={classes.button} 
+          variant="outlined" 
+          color="primary" 
+          onClick={() => setOpen(true)}
+        >
+          TODOを登録する
+        </Button>
       </div>
     </TodoContext.Provider>
   );

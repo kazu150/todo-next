@@ -28,10 +28,6 @@ export default function FormDialog() {
         setStatus(event.target.value);
     };
 
-    const handleClickOpen = () => {
-        setOpen(true);
-    };
-
     const handleClose = () => {
         setOpen(false);
         dispatch({ type: 'clear_selectedTodo' })
@@ -114,10 +110,6 @@ export default function FormDialog() {
         },
         block: {
             display: 'block',
-        },
-        button: {
-            marginTop: '20px',
-            marginLeft: '20px'
         }
     }));
 
@@ -126,9 +118,6 @@ export default function FormDialog() {
 
     return (
         <div>
-            <Button className={classes.button} variant="outlined" color="primary" onClick={handleClickOpen}>
-                TODOを登録する
-            </Button>
             <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
                 <DialogTitle id="form-dialog-title">TODO</DialogTitle>
                 <DialogContent className={classes.container}>
