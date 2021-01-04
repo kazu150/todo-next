@@ -12,6 +12,7 @@ import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
+import { sort } from '../utils/sort';
 
 
 export default function FormDialog() {
@@ -21,7 +22,9 @@ export default function FormDialog() {
         status, 
         setStatus,
         state,
-        dispatch
+        dispatch,
+        sortBy,
+        setSortBy
     } = useContext(TodoContext);
 
     const handleChange = (event) => {
@@ -57,11 +60,7 @@ export default function FormDialog() {
             newSelectedTodo.updatedAt = getDate()
             dispatch({
                 type: 'update_row',
-                payload: [ ...newRows, newSelectedTodo ].sort((a,b) => {
-                    if(a.id > b.id) return 1;
-                    if(a.id < b.id) return -1;
-                    return 0;
-                })
+                payload: sort([ ...newRows, newSelectedTodo ], sortBy)
             })
         } else {
             dispatch({
