@@ -6,7 +6,7 @@ import TableCell from '@material-ui/core/TableCell';
 import TableRow from '@material-ui/core/TableRow';
 import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
-// import Paper from '@material-ui/core/Paper';
+import Paper from '@material-ui/core/Paper';
 
 const useStyles = makeStyles({
     table: {
@@ -22,8 +22,8 @@ export default function TodoList() {
             <Typography variant="h3" gutterBottom>
                 Todos
             </Typography>
-            <TableContainer >
-                <Table  aria-label="simple table">
+            <TableContainer component={Paper}>
+                <Table className={classes.table} aria-label="simple table">
                     <TableHead>
                         <TableRow>
                             <TableCell>No.</TableCell>
