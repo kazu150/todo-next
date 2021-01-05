@@ -92,10 +92,6 @@ export default function Home() {
     localStorage.setItem('rows', JSON.stringify(state.rows))
   }, [state.rows]); 
 
-  useEffect(() => {
-    console.log(checked)
-  }, [checked])
-
   const useStyles = makeStyles((theme) => ({
     button: {
         marginTop: '20px',
@@ -132,12 +128,15 @@ export default function Home() {
           className={classes.button} 
           variant="outlined" 
           color="primary" 
-          onClick={() => dispatch({
-            type: 'row_deleteSelected',
-            payload: [ ...state.rows ].filter(row => { 
-              return !checked[row.id.toString()] 
+          onClick={() => {
+            dispatch({
+              type: 'row_deleteSelected',
+              payload: [ ...state.rows ].filter(row => { 
+                return !checked[row.id.toString()] 
+              })
             })
-          })}
+            setChecked({})
+          }}
         >
           TODOをまとめて削除する
         </Button>

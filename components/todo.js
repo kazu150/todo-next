@@ -43,7 +43,7 @@ export default function Todo() {
     }));
 
     const classes = useStyles();
-    console.log(state.rows)
+    
     return (
         <TableBody>
             {state.rows.map((row, index) => (
