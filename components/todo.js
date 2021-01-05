@@ -24,8 +24,15 @@ export default function Todo() {
     }
 
     const handleCheck = (event) => {
-        setChecked({ ...checked, [event.target.name]: !checked[event.target.name] });
         setOpen(false)
+        dispatch({ type: 'selectedTodo_clear' })
+        
+        const isChecked = checked.length ? checked.some(item => item === event.target.name) : false
+        if(isChecked){
+            setChecked([ ...checked ].filter(item => item !== event.target.name))
+        } else {
+            setChecked([ ...checked, event.target.name ])
+        }
     };
     
 
@@ -69,7 +76,7 @@ export default function Todo() {
                         <Checkbox
                             onChange={handleCheck}
                             name={row.id.toString()}
-                            checked={checked[row]}
+                            checked={checked.length ? checked.some(item => item === row.id.toString()) : false}
                             color="primary"
                         />
                     </TableCell>
