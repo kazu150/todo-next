@@ -10,8 +10,7 @@ export const TodoContext = React.createContext()
 export default function Home() {  
   const [sortBy, setSortBy] = useState('id');
   const [open, setOpen] = useState(false);
-  const [isError, setIsError] = useState(false)
-
+  
   const createData = (id, title, limit, createdAt, updatedAt, description, status) => {  
     return { id, title, limit, createdAt, updatedAt, description, status };
   }
