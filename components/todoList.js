@@ -33,11 +33,21 @@ export default function TodoList() {
     } = useContext(TodoContext)
 
     const handleSort = (itemName) => {
-        setSortBy(itemName)
-        dispatch({
-            type: 'row_update',
-            payload: sort(state.rows, itemName)
-        })
+        if(itemName !== sortBy[0]){
+            setSortBy([itemName, true])
+            dispatch({
+                type: 'row_update',
+                payload: sort(state.rows, [itemName, true])
+            })
+
+        } else {
+            const order = !sortBy[1]
+            setSortBy([itemName, order])
+            dispatch({
+                type: 'row_update',
+                payload: sort(state.rows, [itemName, order])
+            })
+        }
     }
 
     const listItems = [
@@ -48,6 +58,14 @@ export default function TodoList() {
         { name: 'updatedAt', label: '最終更新日', align: 'right' },
         { name: 'status', label: '状態', align: 'right' }
     ]
+
+    const showOrder = () => {
+        return(
+            <>
+
+            </>
+        )
+    }
 
     return (
         <>
@@ -63,9 +81,11 @@ export default function TodoList() {
                                     key={index}
                                     onClick={() => handleSort(listItem.name)}
                                     align={listItem.align}
-                                    className={listItem.name === sortBy ? classes.onSortByActive : ''}
+                                    className={listItem.name === sortBy[0] ? classes.onSortByActive : ''}
                                 >
                                     {listItem.label}
+                                    {listItem.name === sortBy[0] && sortBy[1] && ( <> ▼</> )}
+                                    {listItem.name === sortBy[0] && !sortBy[1] && ( <> ▲</> )}
                                 </TableCell>
                             ))}
                         </TableRow>

@@ -8,7 +8,7 @@ import { sort } from '../utils/sort';
 export const TodoContext = React.createContext()
 
 export default function Home() {  
-  const [sortBy, setSortBy] = useState('id');
+  const [sortBy, setSortBy] = useState(['id', true]);
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
