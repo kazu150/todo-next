@@ -1,4 +1,4 @@
-import { useContext, useState} from 'react';
+import { useContext } from 'react';
 import {TodoContext} from '../pages/';
 import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
@@ -59,7 +59,7 @@ export default function FormDialog() {
                     updatedAt: getDate(),
                     status: state.selectedTodo.status === '' ? '未着手' : state.selectedTodo.status,
                     description: state.selectedTodo.description,
-                    id: state.rows.reduce((a,b) => a.id>b.id ? a : b).id + 1
+                    id: !state.rows.length ? 0 : state.rows.reduce((a,b) => a.id>b.id ? a : b).id + 1
                 }
             })
         }        
