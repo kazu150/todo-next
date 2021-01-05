@@ -58,8 +58,9 @@ export default function TodoList() {
                 <Table className={classes.table} aria-label="simple table">
                     <TableHead>
                         <TableRow>
-                            {listItems.map( listItem => (
+                            {listItems.map( (listItem, index) => (
                                 <TableCell 
+                                    key={index}
                                     onClick={() => handleSort(listItem.name)}
                                     align={listItem.align}
                                     className={listItem.name === sortBy ? classes.onSortByActive : ''}
