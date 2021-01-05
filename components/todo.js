@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext } from 'react';
 import { TodoContext } from '../pages/'
 import { makeStyles } from '@material-ui/core/styles';
 import TableCell from '@material-ui/core/TableCell';
@@ -10,7 +10,9 @@ export default function Todo() {
     const {
         setOpen,
         state,
-        dispatch
+        dispatch,
+        checked,
+        setChecked
     } = useContext(TodoContext)
 
     const onItemClicked = (id) => {
@@ -21,12 +23,9 @@ export default function Todo() {
         })
     }
 
-    const [checked, setChecked] = useState({
-        checkedB: false
-    })
-
     const handleCheck = (event) => {
-        setChecked({ ...checked, [event.target.name]: event.target.checked });
+        setChecked({ ...checked, [event.target.name]: !checked[event.target.name] });
+        setOpen(false)
     };
     
 
@@ -38,13 +37,13 @@ export default function Todo() {
             backgroundColor: "#DDD"
         },
         finished: {
-            backgroundColor: "#444"
+            backgroundColor: "#555"
         }
 
     }));
 
     const classes = useStyles();
-
+    console.log(state.rows)
     return (
         <TableBody>
             {state.rows.map((row, index) => (
@@ -66,12 +65,11 @@ export default function Todo() {
                     key={row.id} 
                     onClick={() => onItemClicked(row.id)}
                 >
-                    {/* <TableCell align="left">{index + 1}</TableCell> */}
                     <TableCell>
                         <Checkbox
-                            checked={checked.checkedB}
                             onChange={handleCheck}
-                            name="checkedB"
+                            name={row.id.toString()}
+                            checked={checked[row]}
                             color="primary"
                         />
                     </TableCell>
