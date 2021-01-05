@@ -3,10 +3,12 @@ import TodoList from '../components/todoList'
 import FormDialog from '../components/formDialog'
 import Button from '@material-ui/core/Button';
 import { makeStyles } from '@material-ui/core/styles';
+import { sort } from '../utils/sort';
 
 export const TodoContext = React.createContext()
 
 export default function Home() {  
+  const [sortBy, setSortBy] = useState('id');
   const [status, setStatus] = useState('未着手');
   const [open, setOpen] = useState(false);
 
@@ -16,17 +18,13 @@ export default function Home() {
 
 
   const initialState = {
-    rows: [
+    rows: sort([
       createData(5, '起きる', '2020-12-28', '2020-12-20', '2020-12-28', 'うううううううううううううううううううう', '未着手'),
       createData(4, '宿題をやる', '2020-12-28', '2020-12-18', '2020-12-22', 'えええええええええええええええええ', '未着手'),
       createData(3, '歯をみがく', '2020-12-28', '2020-12-16', '2020-12-21', 'んんんんんんんんんんんんんんんんんんん', '未着手'),
       createData(2, 'ご飯を作る', '2020-12-28', '2020-12-12', '2020-12-20', 'ぱぱぱぱぱささささささささいいいいいえええええ', '未着手'),
       createData(1, '洗濯する', '2020-12-28', '2020-12-10', '2020-12-19', 'あおあおあおあおあおおあおあおあおあおあおあおあ', '未着手'),
-    ].sort((a,b) => {
-      if(a.id > b.id) return 1;
-      if(a.id < b.id) return -1;
-      return 0;
-    }),
+    ], sortBy),
     selectedTodo: {
       title: '',
       limit: '',
@@ -43,11 +41,7 @@ export default function Home() {
       case 'create_row':
         return {
           ...state,
-          rows: [ ...state.rows, action.payload].sort((a,b) => {
-            if(a.id > b.id) return 1;
-            if(a.id < b.id) return -1;
-            return 0;
-          })
+          rows: sort([ ...state.rows, action.payload], sortBy)
         }
       case 'update_row':
         return {
@@ -92,6 +86,8 @@ export default function Home() {
   return (
     <TodoContext.Provider 
       value={{
+        sortBy,
+        setSortBy,
         open, 
         setOpen, 
         status, 
