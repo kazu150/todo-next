@@ -1,9 +1,10 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { TodoContext } from '../pages/'
 import { makeStyles } from '@material-ui/core/styles';
 import TableCell from '@material-ui/core/TableCell';
 import TableRow from '@material-ui/core/TableRow';
 import TableBody from '@material-ui/core/TableBody';
+import Checkbox from '@material-ui/core/Checkbox';
 
 export default function Todo() {
     const {
@@ -19,6 +20,15 @@ export default function Todo() {
             payload: state.rows.filter(row => row.id === id)[0]
         })
     }
+
+    const [checked, setChecked] = useState({
+        checkedB: false
+    })
+
+    const handleCheck = (event) => {
+        setChecked({ ...checked, [event.target.name]: event.target.checked });
+    };
+    
 
     const useStyles = makeStyles((theme) => ({
         normal: {
@@ -56,7 +66,15 @@ export default function Todo() {
                     key={row.id} 
                     onClick={() => onItemClicked(row.id)}
                 >
-                    <TableCell align="left">{index + 1}</TableCell>
+                    {/* <TableCell align="left">{index + 1}</TableCell> */}
+                    <TableCell>
+                        <Checkbox
+                            checked={checked.checkedB}
+                            onChange={handleCheck}
+                            name="checkedB"
+                            color="primary"
+                        />
+                    </TableCell>
                     <TableCell component="th" scope="row">
                         {row.title}
                     </TableCell>

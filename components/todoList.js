@@ -59,14 +59,6 @@ export default function TodoList() {
         { name: 'status', label: '状態', align: 'right' }
     ]
 
-    const showOrder = () => {
-        return(
-            <>
-
-            </>
-        )
-    }
-
     return (
         <>
             <Typography variant="h3" gutterBottom>
