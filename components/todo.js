@@ -8,20 +8,16 @@ import TableBody from '@material-ui/core/TableBody';
 export default function Todo() {
     const {
         setOpen,
-        setStatus,
         state,
         dispatch
     } = useContext(TodoContext)
 
-
-
     const onItemClicked = (id) => {
         setOpen(true)
         dispatch({
-            type: 'set_selectedTodo',
+            type: 'selectedTodo_set',
             payload: state.rows.filter(row => row.id === id)[0]
         })
-        setStatus(state.rows.filter(row => row.id === id)[0].status )
     }
 
     const useStyles = makeStyles((theme) => ({

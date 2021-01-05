@@ -35,7 +35,7 @@ export default function TodoList() {
     const handleSort = (itemName) => {
         setSortBy(itemName)
         dispatch({
-            type: 'update_row',
+            type: 'row_update',
             payload: sort(state.rows, itemName)
         })
     }
@@ -57,11 +57,6 @@ export default function TodoList() {
             <TableContainer component={Paper}>
                 <Table className={classes.table} aria-label="simple table">
                     <TableHead>
-                    {/* <TableCell 
-                                    className={classes.onSortByActive}
-                                >
-                                    test
-                                </TableCell> */}
                         <TableRow>
                             {listItems.map( listItem => (
                                 <TableCell 
