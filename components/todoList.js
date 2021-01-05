@@ -35,7 +35,7 @@ export default function TodoList() {
     const handleSort = (itemName) => {
         setSortBy(itemName)
         dispatch({
-            type: 'update_row',
+            type: 'row_update',
             payload: sort(state.rows, itemName)
         })
     }

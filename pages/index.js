@@ -10,6 +10,7 @@ export const TodoContext = React.createContext()
 export default function Home() {  
   const [sortBy, setSortBy] = useState('id');
   const [open, setOpen] = useState(false);
+  const [isError, setIsError] = useState(false)
 
   const createData = (id, title, limit, createdAt, updatedAt, description, status) => {  
     return { id, title, limit, createdAt, updatedAt, description, status };
@@ -31,44 +32,50 @@ export default function Home() {
       updatedAt: '',
       status: '',
       description: '',
-      id: ''
+      id: '',
+      errorPart: ''
     }
   }
 
   const reducer = (state, action) => {
     switch(action.type) { 
-      case 'create_row':
+      case 'row_create':
         return {
           ...state,
-          rows: sort([ ...state.rows, action.payload], sortBy)
+          rows: sort([ ...state.rows, action.payload], sortBy),
         }
-      case 'update_row':
+      case 'row_update':
         return {
           ...state,
-          rows: action.payload
+          rows: action.payload,
         }
-      case 'delete_row':
+      case 'row_delete':
         return {
           ...state,
-          rows: action.payload
+          rows: action.payload,
         }
-      case 'set_selectedTodo':
+      case 'selectedTodo_set':
         return {
           ...state,
-          selectedTodo: action.payload
+          selectedTodo: action.payload,
         }
-      case 'update_selectedTodo':
+      case 'selectedTodo_update':
         return {
           ...state,
-          selectedTodo: { ...state.selectedTodo, ...action.payload }
+          selectedTodo: { ...state.selectedTodo, ...action.payload,  errorPart: '' }
         }
-      case 'clear_selectedTodo':
+      case 'selectedTodo_clear':
         return {
           ...state,
           selectedTodo: initialState.selectedTodo
         }
+      case 'selectedTodo_error':
+        return {
+          ...state,
+          selectedTodo: { ...state.selectedTodo, errorPart: action.payload }
+        }
       default: 
-        return;
+        break;
     }
   }
 

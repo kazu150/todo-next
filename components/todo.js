@@ -12,12 +12,10 @@ export default function Todo() {
         dispatch
     } = useContext(TodoContext)
 
-
-
     const onItemClicked = (id) => {
         setOpen(true)
         dispatch({
-            type: 'set_selectedTodo',
+            type: 'selectedTodo_set',
             payload: state.rows.filter(row => row.id === id)[0]
         })
     }

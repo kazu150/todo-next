@@ -13,6 +13,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import { sort } from '../utils/sort';
+import { getDate } from '../utils/getDate';
 
 
 export default function FormDialog() {
@@ -27,42 +28,36 @@ export default function FormDialog() {
 
     const handleClose = () => {
         setOpen(false);
-        dispatch({ type: 'clear_selectedTodo' })
+        dispatch({ type: 'selectedTodo_clear' })
     };
-
-    const getDate = () => {
-        let date = new Date();
-        return `${date.getFullYear()}-${date.getMonth()+1}-${date.getDate()}`
-    }
 
     const onTodoSubmit = (e) => {
         e.preventDefault();
         if (!state.selectedTodo.title) {
-            alert('タイトルを入力してください')
+            dispatch({ type: 'selectedTodo_error', payload: 'title' })
             return
         }
         if (!state.selectedTodo.limit) {
-            alert('期限を入力してください')
+            dispatch({ type: 'selectedTodo_error', payload: 'limit' })
             return
         }
-
         if(state.selectedTodo.id){
             const newRows = state.rows.filter(row => row.id !== state.selectedTodo.id)
             const newSelectedTodo = {...state.selectedTodo}
             newSelectedTodo.updatedAt = getDate()
             dispatch({
-                type: 'update_row',
+                type: 'row_update',
                 payload: sort([ ...newRows, newSelectedTodo ], sortBy)
             })
         } else {
             dispatch({
-                type: 'create_row', 
+                type: 'row_create', 
                 payload: {
                     title: state.selectedTodo.title, 
                     limit: state.selectedTodo.limit, 
                     createdAt: getDate(),
                     updatedAt: getDate(),
-                    status: state.selectedTodo.status,
+                    status: state.selectedTodo.status === '' ? '未着手' : state.selectedTodo.status,
                     description: state.selectedTodo.description,
                     id: state.rows.reduce((a,b) => a.id>b.id ? a : b).id + 1
                 }
@@ -74,7 +69,7 @@ export default function FormDialog() {
 
     const onTodoDelete = () => {
         dispatch({
-            type: 'delete_row',
+            type: 'row_delete',
             payload: state.rows.filter(row => row !== state.selectedTodo)
         })
         handleClose()
@@ -122,10 +117,12 @@ export default function FormDialog() {
                         type="text"
                         value={state.selectedTodo.title}
                         onChange={e => dispatch({
-                            type: 'update_selectedTodo',
+                            type: 'selectedTodo_update',
                             payload: { title: e.target.value }
                         })}
                         fullWidth
+                        error={state.selectedTodo.errorPart === "title" ? true : false }
+                        helperText={state.selectedTodo.errorPart === "title" ? "タイトルを入力してください" : "" }
                     />
                     <TextField
                         id="limit"
@@ -138,9 +135,11 @@ export default function FormDialog() {
                         shrink: true,
                         }}
                         onChange={e => dispatch({
-                            type: 'update_selectedTodo',
+                            type: 'selectedTodo_update',
                             payload: { limit: e.target.value }
                         })}
+                        error={state.selectedTodo.errorPart === "limit" ? true : false }
+                        helperText={state.selectedTodo.errorPart === "limit" ? "期限を入力してください" : "" }
                     />
                     <FormControl className={classes.formControl}>
                         <InputLabel id="demo-simple-select-label">状態</InputLabel>
@@ -150,7 +149,7 @@ export default function FormDialog() {
                             id="status"
                             value={state.selectedTodo.status}
                             onChange={e => dispatch({
-                                type: 'update_selectedTodo',
+                                type: 'selectedTodo_update',
                                 payload: { status: e.target.value }
                             })}
                         >
@@ -169,7 +168,7 @@ export default function FormDialog() {
                         rows={4}
                         value={state.selectedTodo.description}
                         onChange={e => dispatch({
-                            type: 'update_selectedTodo',
+                            type: 'selectedTodo_update',
                             payload: { description: e.target.value }
                         })}
                         fullWidth
