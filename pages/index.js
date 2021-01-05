@@ -1,4 +1,4 @@
-import React, { useState, useReducer } from 'react'
+import React, { useState, useReducer, useEffect } from 'react'
 import TodoList from '../components/todoList'
 import FormDialog from '../components/formDialog'
 import Button from '@material-ui/core/Button';
@@ -10,20 +10,16 @@ export const TodoContext = React.createContext()
 export default function Home() {  
   const [sortBy, setSortBy] = useState('id');
   const [open, setOpen] = useState(false);
-  
-  const createData = (id, title, limit, createdAt, updatedAt, description, status) => {  
-    return { id, title, limit, createdAt, updatedAt, description, status };
-  }
 
+  useEffect(() => {
+    dispatch({
+      type: 'row_initiate',
+      payload: JSON.parse(localStorage.getItem('rows'))
+    })
+  }, [])
 
   const initialState = {
-    rows: sort([
-      createData(5, '起きる', '2020-12-28', '2020-12-20', '2020-12-28', 'うううううううううううううううううううう', '未着手'),
-      createData(4, '宿題をやる', '2020-12-28', '2020-12-18', '2020-12-22', 'えええええええええええええええええ', '未着手'),
-      createData(3, '歯をみがく', '2020-12-28', '2020-12-16', '2020-12-21', 'んんんんんんんんんんんんんんんんんんん', '未着手'),
-      createData(2, 'ご飯を作る', '2020-12-28', '2020-12-12', '2020-12-20', 'ぱぱぱぱぱささささささささいいいいいえええええ', '未着手'),
-      createData(1, '洗濯する', '2020-12-28', '2020-12-10', '2020-12-19', 'あおあおあおあおあおおあおあおあおあおあおあおあ', '未着手'),
-    ], sortBy),
+    rows: [],
     selectedTodo: {
       title: '',
       limit: '',
@@ -38,6 +34,11 @@ export default function Home() {
 
   const reducer = (state, action) => {
     switch(action.type) { 
+      case 'row_initiate':
+        return {
+          ...state,
+          rows: action.payload
+        }
       case 'row_create':
         return {
           ...state,
@@ -79,6 +80,10 @@ export default function Home() {
   }
 
   const [ state, dispatch ] = useReducer(reducer, initialState)
+
+  useEffect(() => {
+    localStorage.setItem('rows', JSON.stringify(state.rows))
+  }, [state.rows]); 
 
   const useStyles = makeStyles((theme) => ({
     button: {
