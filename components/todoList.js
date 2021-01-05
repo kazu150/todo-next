@@ -57,11 +57,6 @@ export default function TodoList() {
             <TableContainer component={Paper}>
                 <Table className={classes.table} aria-label="simple table">
                     <TableHead>
-                    {/* <TableCell 
-                                    className={classes.onSortByActive}
-                                >
-                                    test
-                                </TableCell> */}
                         <TableRow>
                             {listItems.map( listItem => (
                                 <TableCell 

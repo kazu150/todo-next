@@ -1,4 +1,4 @@
-import { useContext } from 'react';
+import { useContext, useState} from 'react';
 import {TodoContext} from '../pages/';
 import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
@@ -16,25 +16,18 @@ import { sort } from '../utils/sort';
 
 
 export default function FormDialog() {
+
     const { 
         open, 
         setOpen, 
-        status, 
-        setStatus,
         state,
         dispatch,
-        sortBy,
-        setSortBy
+        sortBy
     } = useContext(TodoContext);
-
-    const handleChange = (event) => {
-        setStatus(event.target.value);
-    };
 
     const handleClose = () => {
         setOpen(false);
         dispatch({ type: 'clear_selectedTodo' })
-        setStatus('未着手')
     };
 
     const getDate = () => {
@@ -56,7 +49,6 @@ export default function FormDialog() {
         if(state.selectedTodo.id){
             const newRows = state.rows.filter(row => row.id !== state.selectedTodo.id)
             const newSelectedTodo = {...state.selectedTodo}
-            newSelectedTodo.status = status
             newSelectedTodo.updatedAt = getDate()
             dispatch({
                 type: 'update_row',
@@ -70,7 +62,7 @@ export default function FormDialog() {
                     limit: state.selectedTodo.limit, 
                     createdAt: getDate(),
                     updatedAt: getDate(),
-                    status: status,
+                    status: state.selectedTodo.status,
                     description: state.selectedTodo.description,
                     id: state.rows.reduce((a,b) => a.id>b.id ? a : b).id + 1
                 }
@@ -156,8 +148,11 @@ export default function FormDialog() {
                             fullWidth
                             labelId="demo-simple-select-label"
                             id="status"
-                            value={status}
-                            onChange={handleChange}
+                            value={state.selectedTodo.status}
+                            onChange={e => dispatch({
+                                type: 'update_selectedTodo',
+                                payload: { status: e.target.value }
+                            })}
                         >
                             <MenuItem value={"未着手"}>未着手</MenuItem>
                             <MenuItem value={"途中"}>途中</MenuItem>

@@ -9,7 +9,6 @@ export const TodoContext = React.createContext()
 
 export default function Home() {  
   const [sortBy, setSortBy] = useState('id');
-  const [status, setStatus] = useState('未着手');
   const [open, setOpen] = useState(false);
 
   const createData = (id, title, limit, createdAt, updatedAt, description, status) => {  
@@ -89,9 +88,7 @@ export default function Home() {
         sortBy,
         setSortBy,
         open, 
-        setOpen, 
-        status, 
-        setStatus,
+        setOpen,
         state,
         dispatch
       }} 
