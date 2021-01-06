@@ -24,7 +24,6 @@ const useStyles = makeStyles({
 export default function TodoList() {
     const classes = useStyles();
 
-
     const { 
         sortBy, 
         setSortBy, 
@@ -51,21 +50,12 @@ export default function TodoList() {
     }
 
     const listItems = [
-        { name: 'id', label: 'No.', align: 'left' },
         { name: 'title', label: 'タイトル', align: 'left' },
         { name: 'limit', label: '期限', align: 'right' },
         { name: 'createdAt', label: '作成日', align: 'right' },
         { name: 'updatedAt', label: '最終更新日', align: 'right' },
         { name: 'status', label: '状態', align: 'right' }
     ]
-
-    const showOrder = () => {
-        return(
-            <>
-
-            </>
-        )
-    }
 
     return (
         <>
@@ -76,6 +66,7 @@ export default function TodoList() {
                 <Table className={classes.table} aria-label="simple table">
                     <TableHead>
                         <TableRow>
+                            <TableCell>選択</TableCell>
                             {listItems.map( (listItem, index) => (
                                 <TableCell 
                                     key={index}

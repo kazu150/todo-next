@@ -8,8 +8,9 @@ import { sort } from '../utils/sort';
 export const TodoContext = React.createContext()
 
 export default function Home() {  
-  const [sortBy, setSortBy] = useState(['id', true]);
+  const [sortBy, setSortBy] = useState(['createdAt', true]);
   const [open, setOpen] = useState(false);
+  const [checked, setChecked] = useState([])
 
   useEffect(() => {
     dispatch({
@@ -53,7 +54,13 @@ export default function Home() {
         return {
           ...state,
           rows: action.payload,
-        }
+      }
+      case 'row_deleteSelected':
+        return {
+          ...state,
+          rows: action.payload,
+          selectedTodo: initialState.selectedTodo
+      }
       case 'selectedTodo_set':
         return {
           ...state,
@@ -101,7 +108,9 @@ export default function Home() {
         open, 
         setOpen,
         state,
-        dispatch
+        dispatch,
+        checked,
+        setChecked
       }} 
     >
       <div className="App">
@@ -115,6 +124,25 @@ export default function Home() {
         >
           TODOを登録する
         </Button>
+        { 
+          checked.length ?
+          <Button 
+            className={classes.button} 
+            variant="outlined" 
+            color="secondary" 
+            onClick={() => {
+              dispatch({
+                type: 'row_deleteSelected',
+                payload: [ ...state.rows ].filter(row => { 
+                  return !checked.some(item => item === row.id.toString())
+                })
+              })
+              setChecked([])
+            }}
+          >
+            TODOをまとめて削除する
+          </Button>  : ''
+        }
       </div>
     </TodoContext.Provider>
   );
