@@ -4,7 +4,7 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: center;
+  -items: center;
 }
 
 .main {
@@ -13,7 +13,7 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: center;
+  -items: center;
 }
 
 .footer {
@@ -22,7 +22,7 @@
   border-top: 1px solid #eaeaea;
   display: flex;
   justify-content: center;
-  align-items: center;
+  -items: center;
 }
 
 .footer img {
@@ -32,7 +32,7 @@
 .footer a {
   display: flex;
   justify-content: center;
-  align-items: center;
+  -items: center;
 }
 
 .title a {
@@ -54,7 +54,7 @@
 
 .title,
 .description {
-  text-align: center;
+  text-: center;
 }
 
 .description {
@@ -73,7 +73,7 @@
 
 .grid {
   display: flex;
-  align-items: center;
+  -items: center;
   justify-content: center;
   flex-wrap: wrap;
   max-width: 800px;
@@ -84,7 +84,7 @@
   margin: 1rem;
   flex-basis: 45%;
   padding: 1.5rem;
-  text-align: left;
+  text-: left;
   color: inherit;
   text-decoration: none;
   border: 1px solid #eaeaea;

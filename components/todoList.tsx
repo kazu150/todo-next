@@ -10,6 +10,19 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import Paper from '@material-ui/core/Paper';
 import { sort } from '../utils/sort';
+import { TableCellProps } from '@material-ui/core/TableCell/TableCell';
+
+type listItem = {
+    title?: any
+    limit?: any 
+    createdAt?: any
+    updatedAt?: any
+    status?: any
+    description?: any
+    id?: any
+}
+
+export type listItems = listItem[]
 
 const useStyles = makeStyles({
     table: {
@@ -71,7 +84,7 @@ export default function TodoList() {
                                 <TableCell 
                                     key={index}
                                     onClick={() => handleSort(listItem.name)}
-                                    align={listItem.align}
+                                    align={listItem.align as TableCellProps['align']}
                                     className={listItem.name === sortBy[0] ? classes.onSortByActive : ''}
                                 >
                                     {listItem.label}
@@ -81,7 +94,7 @@ export default function TodoList() {
                             ))}
                         </TableRow>
                     </TableHead>
-                    <Todo listItems={listItems} />
+                    <Todo />
                 </Table>
             </TableContainer>
         </>
