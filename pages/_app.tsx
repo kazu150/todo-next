@@ -1,5 +1,5 @@
 import '../styles/globals.css'
-import React from 'react';
+import React, { FC } from 'react';
 import PropTypes from 'prop-types';
 import Head from 'next/head';
 import { AppProps } from 'next/app'
@@ -7,7 +7,7 @@ import { ThemeProvider } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import theme from '../src/theme';
 
-export default function MyApp(props: AppProps) {
+const MyApp: FC<AppProps> = (props: AppProps) => {
   const { Component, pageProps } = props;
 
   React.useEffect(() => {
@@ -34,6 +34,9 @@ export default function MyApp(props: AppProps) {
 }
 
 MyApp.propTypes = {
-  Component: PropTypes.elementType.isRequired,
+  Component: PropTypes.elementType.isRequired as any, 
+  //TODO - 理屈はわからないが、エラーを回避するため「as any」といれている
   pageProps: PropTypes.object.isRequired,
 };
+
+export default MyApp;

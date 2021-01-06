@@ -1,24 +1,40 @@
-import React, { useState, useReducer, useEffect } from 'react'
+import React, { FC, useState, useReducer, useEffect, createContext, Dispatch, SetStateAction } from 'react'
 import TodoList from '../components/todoList'
 import FormDialog from '../components/formDialog'
 import Button from '@material-ui/core/Button';
 import { makeStyles } from '@material-ui/core/styles';
 import { sort } from '../utils/sort';
 
-type contextType = {
-  rows?: {key?: string}[]
-  selectedTodo?: any
-  sortBy:any
-  setSortBy:any
-  open:any 
-  setOpen:any
-  state:any
-  dispatch:any
-  checked:any
-  setChecked: any
+export type row = {
+  title?: string,
+  limit?: string,
+  createdAt?: string,
+  updatedAt?: string,
+  status?: string,
+  description?: string,
+  id?: number,
+  errorPart?: string
 }
 
-const initialState = {
+export type contextType = {
+  rows?: row[]
+  selectedTodo?: row
+  sortBy?: [string, boolean]
+  setSortBy?: Dispatch<SetStateAction<[string, boolean]>>
+  open?: boolean
+  setOpen?: Dispatch<SetStateAction<boolean>> 
+  state?: any
+  dispatch?: Dispatch<any>
+  checked?: string[]
+  setChecked?: Dispatch<SetStateAction<string[]>>
+}
+
+type reducerState = {
+  rows: row[],
+  selectedTodo: row
+}
+
+const initialState: reducerState = {
   rows: [],
   selectedTodo: {
     title: '',
@@ -27,27 +43,17 @@ const initialState = {
     updatedAt: '',
     status: '',
     description: '',
-    id: '',
+    id: null,
     errorPart: ''
   },
-  sortBy:null,
-  setSortBy:null,
-  open:null, 
-  setOpen:null,
-  state:null,
-  dispatch:null,
-  checked:null,
-  setChecked: null,
 }
 
-export const TodoContext = React.createContext<contextType>(initialState)
+export const TodoContext = createContext<contextType>(initialState)
 
-export default function Home() {  
-  const [sortBy, setSortBy] = useState(['createdAt', true]);
+const Home: FC = () => {  
+  const [sortBy, setSortBy] = useState<[string, boolean]>(['createdAt', true]);
   const [open, setOpen] = useState(false);
-  const [checked, setChecked] = useState([])
-
-
+  const [checked, setChecked] = useState<string[]>([])
 
   useEffect(() => {
     dispatch({
@@ -56,8 +62,10 @@ export default function Home() {
     })
   }, [])
 
-
-  const reducer = (state, action) => {
+  const reducer = (
+    state: reducerState, 
+    action: { type: string, payload: any }
+  ): reducerState => {
     switch(action.type) { 
       case 'row_initiate':
         return {
@@ -134,7 +142,7 @@ export default function Home() {
         state,
         dispatch,
         checked,
-        setChecked,
+        setChecked
       }} 
     >
       <div className="App">
@@ -171,3 +179,5 @@ export default function Home() {
     </TodoContext.Provider>
   );
 }
+
+export default Home;

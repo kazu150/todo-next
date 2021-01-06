@@ -1,4 +1,4 @@
-import { useContext } from 'react';
+import { useContext, FC, SyntheticEvent } from 'react';
 import {TodoContext} from '../pages';
 import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
@@ -14,9 +14,10 @@ import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import { sort } from '../utils/sort';
 import { getDate } from '../utils/getDate';
+import { row } from '../pages/'
 
 
-export default function FormDialog() {
+const FormDialog: FC = () => {
 
     const { 
         open, 
@@ -31,19 +32,23 @@ export default function FormDialog() {
         dispatch({ type: 'selectedTodo_clear' })
     };
 
-    const onTodoSubmit = (e) => {
+    const onTodoSubmit = (e: SyntheticEvent) => {
         e.preventDefault();
-        if (!state.selectedTodo.title) {
+        const isTitleFilled: boolean = state.selectedTodo.title
+        const isLimitFilled: boolean = state.selectedTodo.limit
+        const isIdFilled: boolean = state.selectedTodo.id
+
+        if (!isTitleFilled) {
             dispatch({ type: 'selectedTodo_error', payload: 'title' })
             return
         }
-        if (!state.selectedTodo.limit) {
+        if (!isLimitFilled) {
             dispatch({ type: 'selectedTodo_error', payload: 'limit' })
             return
         }
-        if(state.selectedTodo.id){
-            const newRows = state.rows.filter(row => row.id !== state.selectedTodo.id)
-            const newSelectedTodo = {...state.selectedTodo}
+        if(isIdFilled){
+            const newRows: row[] = state.rows.filter(row => row.id !== state.selectedTodo.id)
+            const newSelectedTodo: row = {...state.selectedTodo}
             newSelectedTodo.updatedAt = getDate()
             dispatch({
                 type: 'row_update',
@@ -192,3 +197,5 @@ export default function FormDialog() {
         </div>
     );
 }
+
+export default FormDialog;
