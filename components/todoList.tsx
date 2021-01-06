@@ -1,5 +1,5 @@
 import { useContext } from 'react';
-import { TodoContext } from '../pages/';
+import { TodoContext } from '../pages';
 import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import Todo from './todo';

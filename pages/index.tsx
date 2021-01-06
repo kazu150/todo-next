@@ -5,12 +5,49 @@ import Button from '@material-ui/core/Button';
 import { makeStyles } from '@material-ui/core/styles';
 import { sort } from '../utils/sort';
 
-export const TodoContext = React.createContext()
+type contextType = {
+  rows?: {key?: string}[]
+  selectedTodo?: any
+  sortBy:any
+  setSortBy:any
+  open:any 
+  setOpen:any
+  state:any
+  dispatch:any
+  checked:any
+  setChecked: any
+}
+
+const initialState = {
+  rows: [],
+  selectedTodo: {
+    title: '',
+    limit: '',
+    createdAt: '',
+    updatedAt: '',
+    status: '',
+    description: '',
+    id: '',
+    errorPart: ''
+  },
+  sortBy:null,
+  setSortBy:null,
+  open:null, 
+  setOpen:null,
+  state:null,
+  dispatch:null,
+  checked:null,
+  setChecked: null,
+}
+
+export const TodoContext = React.createContext<contextType>(initialState)
 
 export default function Home() {  
   const [sortBy, setSortBy] = useState(['createdAt', true]);
   const [open, setOpen] = useState(false);
   const [checked, setChecked] = useState([])
+
+
 
   useEffect(() => {
     dispatch({
@@ -19,19 +56,6 @@ export default function Home() {
     })
   }, [])
 
-  const initialState = {
-    rows: [],
-    selectedTodo: {
-      title: '',
-      limit: '',
-      createdAt: '',
-      updatedAt: '',
-      status: '',
-      description: '',
-      id: '',
-      errorPart: ''
-    }
-  }
 
   const reducer = (state, action) => {
     switch(action.type) { 
@@ -110,7 +134,7 @@ export default function Home() {
         state,
         dispatch,
         checked,
-        setChecked
+        setChecked,
       }} 
     >
       <div className="App">

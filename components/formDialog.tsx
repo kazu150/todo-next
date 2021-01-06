@@ -1,5 +1,5 @@
 import { useContext } from 'react';
-import {TodoContext} from '../pages/';
+import {TodoContext} from '../pages';
 import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
