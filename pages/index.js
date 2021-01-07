@@ -3,6 +3,9 @@ import TodoList from '../components/todoList'
 import FormDialog from '../components/formDialog'
 import Button from '@material-ui/core/Button';
 import { makeStyles } from '@material-ui/core/styles';
+import AppBar from '@material-ui/core/AppBar';
+import Toolbar from '@material-ui/core/Toolbar';
+import Typography from '@material-ui/core/Typography';
 import { sort } from '../utils/sort';
 
 export const TodoContext = React.createContext()
@@ -26,7 +29,7 @@ export default function Home() {
       limit: '',
       createdAt: '',
       updatedAt: '',
-      status: '',
+      status: 0,
       description: '',
       id: '',
       errorPart: ''
@@ -114,6 +117,13 @@ export default function Home() {
       }} 
     >
       <div className="App">
+        <AppBar>
+          <Toolbar>
+            <Typography variant="h6">Todos</Typography>
+          </Toolbar>
+        </AppBar>
+        <Toolbar />
+
         <TodoList />
         <FormDialog />
         <Button 
