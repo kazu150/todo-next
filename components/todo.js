@@ -81,7 +81,7 @@ export default function Todo() {
                         />
                     </TableCell>
                     <TableCell component="th" scope="row">
-                        {row.title}
+                        {row.title.length < 12 ? row.title : `${row.title.slice(0, 12)}...`}
                     </TableCell>
                     <TableCell align="right">{row.limit}</TableCell>
                     <TableCell align="right">{row.createdAt}</TableCell>
