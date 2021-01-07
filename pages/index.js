@@ -29,7 +29,7 @@ export default function Home() {
       limit: '',
       createdAt: '',
       updatedAt: '',
-      status: '',
+      status: 0,
       description: '',
       id: '',
       errorPart: ''
