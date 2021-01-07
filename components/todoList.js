@@ -60,6 +60,14 @@ export default function TodoList() {
         <>
             <TableContainer component={Paper}>
                 <Table className={classes.table} aria-label="simple table">
+                    <colgroup>
+                        <col width="5%" />
+                        <col width="40%" />
+                        <col width="15%" />
+                        <col width="15%" />
+                        <col width="15%" />
+                        <col width="10%" />
+                    </colgroup>
                     <TableHead>
                         <TableRow>
                             <TableCell>選択</TableCell>
