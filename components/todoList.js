@@ -1,7 +1,6 @@
 import { useContext } from 'react';
 import { TodoContext } from '../pages/';
 import { makeStyles } from '@material-ui/core/styles';
-import Typography from '@material-ui/core/Typography';
 import Todo from './todo';
 import Table from '@material-ui/core/Table';
 import TableCell from '@material-ui/core/TableCell';
@@ -59,9 +58,6 @@ export default function TodoList() {
 
     return (
         <>
-            <Typography variant="h3" gutterBottom>
-                Todos
-            </Typography>
             <TableContainer component={Paper}>
                 <Table className={classes.table} aria-label="simple table">
                     <TableHead>
