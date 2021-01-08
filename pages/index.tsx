@@ -3,6 +3,9 @@ import TodoList from '../components/todoList'
 import FormDialog from '../components/formDialog'
 import Button from '@material-ui/core/Button';
 import { makeStyles } from '@material-ui/core/styles';
+import AppBar from '@material-ui/core/AppBar';
+import Toolbar from '@material-ui/core/Toolbar';
+import Typography from '@material-ui/core/Typography';
 import { sort } from '../utils/sort';
 
 export type row = {
@@ -62,10 +65,28 @@ const Home: FC = () => {
     })
   }, [])
 
+<<<<<<< HEAD:pages/index.tsx
   const reducer = (
     state: reducerState, 
     action: { type: string, payload: any }
   ): reducerState => {
+=======
+  const initialState = {
+    rows: [],
+    selectedTodo: {
+      title: '',
+      limit: '',
+      createdAt: '',
+      updatedAt: '',
+      status: 0,
+      description: '',
+      id: '',
+      errorPart: ''
+    }
+  }
+
+  const reducer = (state, action) => {
+>>>>>>> main:pages/index.js
     switch(action.type) { 
       case 'row_initiate':
         return {
@@ -146,6 +167,13 @@ const Home: FC = () => {
       }} 
     >
       <div className="App">
+        <AppBar>
+          <Toolbar>
+            <Typography variant="h6">Todos</Typography>
+          </Toolbar>
+        </AppBar>
+        <Toolbar />
+
         <TodoList />
         <FormDialog />
         <Button 

@@ -62,7 +62,7 @@ const FormDialog: FC = () => {
                     limit: state.selectedTodo.limit, 
                     createdAt: getDate(),
                     updatedAt: getDate(),
-                    status: state.selectedTodo.status === '' ? '未着手' : state.selectedTodo.status,
+                    status: state.selectedTodo.status,
                     description: state.selectedTodo.description,
                     id: !state.rows.length ? 0 : state.rows.reduce((a,b) => a.id>b.id ? a : b).id + 1
                 }
@@ -157,9 +157,9 @@ const FormDialog: FC = () => {
                                 payload: { status: e.target.value }
                             })}
                         >
-                            <MenuItem value={"未着手"}>未着手</MenuItem>
-                            <MenuItem value={"途中"}>途中</MenuItem>
-                            <MenuItem value={"完了"}>完了</MenuItem>
+                            <MenuItem value={0}>未着手</MenuItem>
+                            <MenuItem value={1}>途中</MenuItem>
+                            <MenuItem value={2}>完了</MenuItem>
                         </Select>
                     </FormControl>
                     <TextField
