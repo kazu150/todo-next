@@ -1,5 +1,5 @@
-import { useContext } from 'react';
-import { TodoContext } from '../pages/';
+import { useContext, FC } from 'react';
+import { TodoContext } from '../pages';
 import { makeStyles } from '@material-ui/core/styles';
 import Todo from './todo';
 import Table from '@material-ui/core/Table';
@@ -9,6 +9,14 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import Paper from '@material-ui/core/Paper';
 import { sort } from '../utils/sort';
+import { TableCellProps } from '@material-ui/core/TableCell/TableCell';
+import { StringDecoder } from 'string_decoder';
+
+type listItem = {
+    name: string
+    label: string
+    align?: string
+}
 
 const useStyles = makeStyles({
     table: {
@@ -20,7 +28,7 @@ const useStyles = makeStyles({
     }
 });
 
-export default function TodoList() {
+const TodoList: FC = () => {
     const classes = useStyles();
 
     const { 
@@ -30,8 +38,8 @@ export default function TodoList() {
         dispatch 
     } = useContext(TodoContext)
 
-    const handleSort = (itemName) => {
-        if(itemName !== sortBy[0]){
+    const handleSort = (itemName: string) => {
+        if(itemName !== sortBy[0] as string){
             setSortBy([itemName, true])
             dispatch({
                 type: 'row_update',
@@ -48,7 +56,7 @@ export default function TodoList() {
         }
     }
 
-    const listItems = [
+    const listItems: listItem[] = [
         { name: 'title', label: 'タイトル', align: 'left' },
         { name: 'limit', label: '期限', align: 'right' },
         { name: 'createdAt', label: '作成日', align: 'right' },
@@ -75,7 +83,7 @@ export default function TodoList() {
                                 <TableCell 
                                     key={index}
                                     onClick={() => handleSort(listItem.name)}
-                                    align={listItem.align}
+                                    align={listItem.align as TableCellProps['align']}
                                     className={listItem.name === sortBy[0] ? classes.onSortByActive : ''}
                                 >
                                     {listItem.label}
@@ -85,9 +93,11 @@ export default function TodoList() {
                             ))}
                         </TableRow>
                     </TableHead>
-                    <Todo listItems={listItems} />
+                    <Todo />
                 </Table>
             </TableContainer>
         </>
     )
 }
+
+export default TodoList;
