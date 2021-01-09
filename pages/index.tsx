@@ -72,7 +72,8 @@ const Home: FC = () => {
     useEffect(() => {
         dispatch({
             type: 'row_initiate',
-            payload: JSON.parse(localStorage.getItem('rows')),
+            payload:
+                JSON.parse(localStorage.getItem('rows')) || initialState.rows,
         });
     }, []);
 
