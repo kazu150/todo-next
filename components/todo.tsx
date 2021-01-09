@@ -48,9 +48,22 @@ const Todo: FC = () => {
         finished: {
             backgroundColor: '#555',
         },
+        checkbox: {
+            padding: 0,
+        },
     }));
 
     const classes = useStyles();
+
+    const showStatus = (statusCode) => {
+        if (statusCode === 0) {
+            return '未着手';
+        } else if (statusCode === 1) {
+            return '途中';
+        } else if (statusCode === 2) {
+            return '完了';
+        }
+    };
 
     return (
         <TableBody>
@@ -58,11 +71,11 @@ const Todo: FC = () => {
                 <TableRow
                     className={(() => {
                         switch (row.status) {
-                            case '未着手':
+                            case 0:
                                 return classes.normal;
-                            case '途中':
+                            case 1:
                                 return classes.inProgress;
-                            case '完了':
+                            case 2:
                                 return classes.finished;
                             default:
                                 return classes.normal;
@@ -83,15 +96,20 @@ const Todo: FC = () => {
                                     : false
                             }
                             color="primary"
+                            className={classes.checkbox}
                         />
                     </TableCell>
                     <TableCell component="th" scope="row">
-                        {row.title}
+                        {row.title.length < 12
+                            ? row.title
+                            : `${row.title.slice(0, 12)}...`}
                     </TableCell>
                     <TableCell align="right">{row.limit}</TableCell>
                     <TableCell align="right">{row.createdAt}</TableCell>
                     <TableCell align="right">{row.updatedAt}</TableCell>
-                    <TableCell align="right">{row.status}</TableCell>
+                    <TableCell align="right">
+                        {showStatus(row.status)}
+                    </TableCell>
                 </TableRow>
             ))}
         </TableBody>
