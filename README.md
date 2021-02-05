@@ -1,30 +1,24 @@
-# Next.jsにてTODOリスト作成
-## TODOリスト内の各TODOにほしい要素
-- ID(連番もしくはuuidを設定)
-- タイトル
-- 期限
-- ステータス(未着手、進行中、完了 など)
-## ほしい機能
-- TODOの追加
-- TODOの削除
-- TODOのタイトル・期限・ステータス変更
-## 余裕があれば以下のようなカスタマイズをする
-- TODOの編集機能
-- ソート(ID、期限、ステータスで並べ替え)
-- フィルター(ID、期限、ステータスで絞り込み)
-- 要素追加（内容、作成日、更新日など）
-- コメント機能
-- ステータス変更でスタイル変更
-- TODOリストを1箇所(どのパーツでもOK)コンポーネント化してみる
-## 使用ツール
+# 簡易TODOリスト
+
+### 目次
+- アプリ概要
+- アプリ仕様
+- 利用ツール
+
+## アプリ概要
+シンプルなTODOリストです。  
+ReactHooks + Next.jsの制作実践として作成しました。  
+アプリURL: https://todo-next-git-main.kazu150.vercel.app/  
+
+## アプリ仕様
+- TODOの新規作成、修正、削除、一括削除に対応
+- TODOのステータスによって、スタイルを変更
+- TODOのソートに対応(タイトル、期限、作成日、最終更新日、状態の昇順降順)
+- 書き込んだデータは、ブラウザのlocalStorageにて管理
+
+## 利用ツール
+- React + React Hooks
+- Vercel
 - Next.js
-- react, react-hooks (useState, useEffect, useReducer, useContextあたり？)
-- material-ui
-## コンポーネント
-- App
-- TodoList
-- Todo
-## context
-- title
-- date
-- status
+- TypeScript
+- Material-ui
